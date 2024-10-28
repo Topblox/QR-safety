@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #result {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Device Detection</h1>
+    <div id="result"></div>
+
+    <script>
+        function detectDevice() {
+            const userAgent = navigator.userAgent;
+
+            if (/iPhone/i.test(userAgent) || /iPad/i.test(userAgent)) {
+                return 'iOS';
+            } else if (/Android/i.test(userAgent)) {
+                return 'Android';
+            } else {
+                return 'Other';
+            }
+        }
+
+        function redirectToStore(deviceType) {
+            // Redirect based on device type
+            if (deviceType === 'iOS') {
+                window.location.href = 'itms-apps://itunes.apple.com/app/id310633997';
+            } else if (deviceType === 'Android') {
+                window.location.href = 'intent://details?id=com.whatsapp#Intent;scheme=market;package=com.android.vending;end';
+            } else if (deviceType === 'Other') {
+                window.location.href = 'ms-windows-store://pdp/?productid=9nblggh3x5z8';
+            }
+        }
+
+        // Run device detection and redirect on page load
+        window.onload = function() {
+            const deviceType = detectDevice();
+            document.getElementById('result').innerText = `Detected device: ${deviceType}`;
+            redirectToStore(deviceType);
+        };
+    </script>
+</body>
+</html>
